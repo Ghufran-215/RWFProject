@@ -1,0 +1,64 @@
+﻿@model RWFProject.Data.Models.Domain.Registration
+
+<h3 class="mb-4">Registration Details</h3>
+
+<a href="/Registration/DisplayAll" class="btn btn-secondary mb-3">← Back to List</a>
+
+<form method="post" asp-action="Update">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Employee Name:</label>
+            <input type="text" class="form-control" name="EmployeeName" value="@Model.EmployeeName" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Phone Number:</label>
+            <input type="text" class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Email:</label>
+            <input type="email" class="form-control" name="Email" value="@Model.Email" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Department:</label>
+            <input type="text" class="form-control" name="Department" value="@Model.Department" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Designation:</label>
+            <input type="text" class="form-control" name="Designation" value="@Model.Designation" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Gender:</label>
+            <input type="text" class="form-control" name="Gender" value="@Model.Gender" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Date of Birth:</label>
+            <input type="date" class="form-control" name="DateOfBirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">National ID:</label>
+            <input type="text" class="form-control" name="NationalIdNumber" value="@Model.NationalIdNumber" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Emergency Contact Name:</label>
+            <input type="text" class="form-control" name="EmergencyContactName" value="@Model.EmergencyContactName" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Emergency Contact Phone:</label>
+            <input type="text" class="form-control" name="EmergencyContactPhone" value="@Model.EmergencyContactPhone" />
+        </div>
+
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">Save</button>
+    </div>
+</form>

@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "All Registrations";
+}
+
+<h2>All Registrations</h2>
+
+<!-- Filter Section -->
+<div class="d-flex justify-content-between mb-3">
+    <!-- Search Bar Section -->
+    <input type="text" id="searchBox" class="form-control w-25" placeholder="Search registrations..." />
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Registration ID</th>
+            <th>Date & Time</th>
+            <th>Location</th>
+            <th>Registered By</th>
+            <th>Status</th>
+            <th>Remarks</th>
+            <th>Type</th>
+            <th>Select</th>
+        </tr>
+    </thead>
+    <tbody id="registrationTableBody">
+        <!-- Table content will be populated here -->
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to load registrations
+            function loadRegistrations(registrationType = "") {
+                $.ajax({
+                    url: "https://localhost:7234/Registration/GetRegistrations",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        let tableBody = $("#registrationTableBody");
+                        tableBody.empty();
+
+                        // Filter data based on registrationType if applicable
+                        const filtered = registrationType
+                            ? data.filter(r => r.registrationType === registrationType)
+                            : data;
+
+                        // Populate table rows
+                        $.each(filtered, function (index, item) {
+                            const formattedDate = new Date(item.dateAndTime).toLocaleString("en-GB");
+                            tableBody.append(`
+                                <tr>
+                                    <td>${item.registrationId}</td>
+                                    <td>${formattedDate}</td>
+                                    <td>${item.location}</td>
+                                    <td>${item.registeredBy}</td>
+                                    <td>${item.registrationStatus}</td>
+                                    <td>${item.remarks}</td>
+                                    <td>${item.registrationType}</td>
+                                    <td>
+                                        <a href="/Registration/Details/${item.registrationId}" class="btn btn-primary">Select</a>
+                                    </td>
+                                </tr>
+                            `);
+                        });
+                    }
+                });
+            }
+
+            // Load all registrations initially
+            loadRegistrations();
+
+            // Search functionality for the search bar
+            $("#searchBox").on("input", function () {
+                const searchTerm = $(this).val().toLowerCase();
+                $("#registrationTableBody tr").each(function () {
+                    const rowText = $(this).text().toLowerCase();
+                    $(this).toggle(rowText.includes(searchTerm)); // Toggle rows based on search term match
+                });
+            });
+
+            // Optional: Filter by registration type (if you have a filter dropdown for registration type)
+            $("#registrationTypeFilter").change(function () {
+                const type = $(this).val();
+                loadRegistrations(type);
+            });
+        });
+    </script>
+}
